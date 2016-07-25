@@ -1,0 +1,12 @@
+{
+    "name": "sergiors/functional-programming-jargons",
+    "description": "Jargon from the functional programming world in simple terms!",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sérgio Rafael Siqueira",
+            "email": "sergio@inbep.com.br"
+        }
+    ],
+    "require": {}
+}

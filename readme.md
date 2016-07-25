@@ -67,7 +67,7 @@ var_dump($arity); // 2
 A function which takes a function as an argument and/or returns a function.
 
 ```php
-function filter($pred, $xs) {
+function filter(callable $pred, array $xs) {
     $result = [];
     for ($idx = 0; $idx < count($xs); $idx++) {
         if ($pred($xs[$idx])) {
