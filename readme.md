@@ -51,11 +51,13 @@ Where applicable, this document uses terms defined in the [Fantasy Land spec](ht
 
 The number of arguments a function takes. From words like unary, binary, ternary, etc. This word has the distinction of being composed of two suffixes, "-ary" and "-ity." Addition, for example, takes two arguments, and so it is defined as a binary function or a function with an arity of two. Such a function may sometimes be called "dyadic" by people who prefer Greek roots to Latin. Likewise, a function that takes a variable number of arguments is called "variadic," whereas a binary function must be given two and only two arguments, currying and partial application notwithstanding (see below).
 
-```js
-const sum = (a, b) => a + b;
+```php
+function sum($a, $b) {
+    return $a + $b;
+};
 
-const arity = sum.length;
-console.log(arity); // 2
+$arity = (new \ReflectionFunction('sum'))->getNumberOfRequiredParameters();
+var_dump($arity); // 2
 
 // The arity of sum is 2
 ```
@@ -64,24 +66,20 @@ console.log(arity); // 2
 
 A function which takes a function as an argument and/or returns a function.
 
-```js
-const filter = (pred, xs) => {
-    const result = [];
-    for (let idx = 0; idx < xs.length; idx++) {
-        if (pred(xs[idx])) {
-            result.push(xs[idx]);
+```php
+function filter($pred, $xs) {
+    $result = [];
+    for ($idx = 0; $idx < count($xs); $idx++) {
+        if ($pred($xs[$idx])) {
+            $result[] = $xs[$idx];
         }
     }
-    return result;
-};
+    return $result;
+}
 ```
 
-```js
-const is = (type) => (x) => Object(x) instanceof type;
-```
-
-```js
-filter(is(Number), [0, '1', 2, null]); // [0, 2]
+```php
+filter('is_numeric', [0, '1', 2, null]); // [0, 2]
 ```
 
 ## Partial Application
