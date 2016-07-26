@@ -87,14 +87,29 @@ filter('is_numeric', [0, '1', 2, null]); // [0, 2]
 The process of getting a function with lesser arity compared to the original
 function by fixing the number of arguments is known as partial application.
 
-```js
-let sum = (a, b) => a + b;
+```php
+function partial(callable $fn, ...$rest)
+{
+    $arity = (new \ReflectionFunction($fn))->getNumberOfRequiredParameters();
+
+    return function (...$args) use ($fn, $rest, $arity) {
+        $args = array_merge($rest, $args);
+
+        return isset($args[$arity - 1])
+            ? $fn(...$args)
+            : partial($fn, ...$args);
+    };
+}
+
+$sum = function($a, $b) {
+    return $a + $b;
+};
 
 // partially applying `a` to `40`
-let partial = sum.bind(null, 40);
+$partial = partial($sum, 40);
 
 // Invoking it with `b`
-partial(2); // 42
+$partial(2); // 42
 ```
 
 ## Currying
@@ -103,17 +118,21 @@ The process of converting a function that takes multiple arguments into a functi
 
 Each time the function is called it only accepts one argument and returns a function that takes one argument until all arguments are passed.
 
-```js
-const sum = (a, b) => a + b;
+```php
+function sum($a, $b) {
+    return $a + $b;
+}
 
-const curriedSum = (a) => (b) => a + b;
+function curriedSum($a) {
+    return function ($b) use ($a) {
+        return $a + $b;
+    };
+}
+curriedSum(40)(2); // 42.
 
-curriedSum(40)(2) // 42.
+$add2 = curriedSum(2); // (b) => 2 + b
 
-const add2 = curriedSum(2); // (b) => 2 + b
-
-add2(10) // 12
-
+$add2(10); // 12
 ```
 
 ## Function Composition
