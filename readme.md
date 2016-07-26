@@ -135,6 +135,8 @@ $add2 = curriedSum(2); // (b) => 2 + b
 $add2(10); // 12
 ```
 
+* **Immediately-Invoked Function Expressions works just in PHP 7.**
+
 ## Function Composition
 
 The act of putting two functions together to form a third function where the output of one function is the input of the other.
